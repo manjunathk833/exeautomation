@@ -3,7 +3,8 @@ import sys
 import os
 from selenium import webdriver
 from tkinter import *
-import dotenv, testrail, os, Conf_Reader
+import testrail, os
+import creds
 from selenium.webdriver.common.by import By
 
 main_window = Tk()
@@ -45,8 +46,8 @@ try:
 finally:
     driver.quit()
 
-result1 = True
-result2 = True
+result1 = False
+result2 = False
 
 """
 TestRail integration
@@ -54,13 +55,17 @@ TestRail integration
 
 def get_testrail_client():
     "Get the TestRail account credentials from the testrail.env file"
-    testrail_file = os.path.join(os.path.dirname(__file__), 'testrail.env')
+    testrail_file = os.path.join(os.path.dirname(__file__), 'creds.py')
     # Get the TestRail Url
-    testrail_url = Conf_Reader.get_value(testrail_file, 'TESTRAIL_URL')
+    #testrail_url = Conf_Reader.get_value(testrail_file, 'TESTRAIL_URL')
+    testrail_url = creds.TESTRAIL_URL
     client = testrail.APIClient(testrail_url)
     # Get and set the TestRail User and Password
-    client.user = Conf_Reader.get_value(testrail_file, 'TESTRAIL_USER')
-    client.password = Conf_Reader.get_value(testrail_file, 'TESTRAIL_PASSWORD')
+    #client.user = Conf_Reader.get_value(testrail_file, 'TESTRAIL_USER')
+    client.user = creds.TESTRAIL_USER
+    #client.password = Conf_Reader.get_value(testrail_file, 'TESTRAIL_PASSWORD')
+    client.password = creds.TESTRAIL_PASSWORD
+
     return client
 
 
@@ -127,7 +132,7 @@ def get_run_id(test_run_name, project_name):
 #Update TestRail
 case1_id = 2
 case2_id = 1
-test_run_id = 1
+test_run_id = 3
 if result1 or result2 is True:
     msg = "updating for true"
 else:
