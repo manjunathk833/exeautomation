@@ -3,6 +3,7 @@ import sys
 import os
 from selenium import webdriver
 from tkinter import *
+import dotenv, testrail, os, Conf_Reader
 from selenium.webdriver.common.by import By
 
 main_window = Tk()
@@ -45,14 +46,11 @@ finally:
     driver.quit()
 
 result1 = True
-result2 = False
+result2 = True
 
 """
 TestRail integration
 """
-import dotenv, testrail, os, Conf_Reader
-
-
 
 def get_testrail_client():
     "Get the TestRail account credentials from the testrail.env file"
@@ -91,6 +89,7 @@ def update_testrail(case_id, run_id, result_flag, msg=""):
 
     return update_flag
 
+'''
 def get_project_id(project_name):
     client = get_testrail_client()
     project_id = None
@@ -122,22 +121,16 @@ def get_run_id(test_run_name, project_name):
                 break
         return run_id
 
+'''
+
 
 #Update TestRail
-result_flag = True
-case_id = 1
+case1_id = 2
+case2_id = 1
 test_run_id = 1
-if result_flag is True:
+if result1 or result2 is True:
     msg = "updating for true"
 else:
     msg = "updating for false"
-update_testrail(case_id, test_run_id, result_flag, msg=msg)
-# get_project_id('Discovery')
-
-
-    # if (result_flag):
-    #     msg = "Successfully updated the example form"
-    #     update_testrail(case_id, test_run_id, result_flag, msg=msg)
-    # else:
-    #     msg = "Failed to update the example form"
-    #     update_testrail(case_id,test_run_id,result_flag,msg=msg)
+update_testrail(case1_id, test_run_id, result1, msg=msg)
+update_testrail(case2_id, test_run_id, result2, msg=msg)

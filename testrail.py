@@ -14,10 +14,7 @@ Copyright Gurock Software GmbH. See license.md for details.
 
 import base64
 import json
-
 import requests
-
-
 
 class APIClient:
     def __init__(self, base_url):
